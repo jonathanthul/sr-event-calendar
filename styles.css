@@ -1,0 +1,27 @@
+#calendar {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.calendar-header, .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-header div { /* styling the div elements inside the header */
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.calendar-grid div {
+    border: 1px solid #ddd;
+    min-height: 80px;
+    padding: 5px;
+    position: relative;
+}
+
+.day-today {
+    background-color: khaki;
+}
