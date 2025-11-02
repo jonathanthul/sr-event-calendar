@@ -68,6 +68,11 @@ function renderCalendar(year, month) {
 
         dayDiv.textContent = d.getDate();
         dayDiv.dataset.date = d.toISOString().split('T')[0]; // what is going on here?
+
+        // Initialize events container for later
+        const eventsContainer = document.createElement('div');
+        eventsContainer.classList.add('events');
+        dayDiv.appendChild(eventsContainer);
         
         // Highlight today's date
         if (d.toDateString() === new Date().toDateString()) {
@@ -122,12 +127,27 @@ async function loadEvents() {
         return [];
     }
 }
+// Initialize the app
+// 1. load and normalize events from events.json
+// 2. render calendar header
+// 3. render calendar grid for the correct month
+// 4. loop through events and add event containers in the correct day cells
+async function init() {
+    normalEvents = await loadEvents();
 
-// load events and store them for later, print them for testing
-// render calendar
-loadEvents().then(events => {
-    normalEvents = events;
-    console.log(normalEvents)
     renderDayNames();
-    renderCalendar(currentYear, currentMonth)
-})
+    renderCalendar(currentYear, currentMonth);
+
+    normalEvents.forEach(event => {
+        const eventDateString = event.datetime.toISOString().split('T')[0];
+        const dayCell = document.querySelector(`.day-cell[data-date='${eventDateString}']`);
+        if (dayCell) {
+            const eventDiv = document.createElement('div');
+            eventDiv.classList.add('event');
+            eventDiv.textContent = event.homeTeam.abbr + " vs " + event.awayTeam.abbr;
+            dayCell.querySelector('.events').appendChild(eventDiv);
+        }
+    });
+}
+
+init();
