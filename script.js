@@ -1,6 +1,8 @@
 // script.js
-// fetches event data from data/events.json, normalizes it and stores it in normalEvents
 
+// -------------------------------
+// Global state and DOM references
+// -------------------------------
 let normalEvents = []; // will hold normalized event data after loading
 let currentYear = 2025;
 let currentMonth = 10;
@@ -12,27 +14,12 @@ const nextBtn = document.getElementById('nextButton');
 const monthTitle = document.getElementById('month-title');
 const grid = document.querySelector('.calendar-grid');
 const header = document.querySelector('.calendar-header');
+const eventModal = document.getElementById('event-detail-view');
+const closeEventModalBtn = document.getElementById('close-event-modal');
 
-prevBtn.addEventListener('click', () => {
-    currentMonth--;
-    if (currentMonth < 0) {
-        currentMonth = 11;
-        currentYear--;
-    }
-    renderCalendar(currentYear, currentMonth);
-    renderEvents(normalEvents);
-});
-
-nextBtn.addEventListener('click', () => {
-    currentMonth++;
-    if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear++;
-    }
-    renderCalendar(currentYear, currentMonth);
-    renderEvents(normalEvents);
-});
-
+// ----------------------------
+// Calendar rendering functions
+// ----------------------------
 
 // Render weekday labels according to dayNames
 function renderDayNames() {
@@ -85,6 +72,40 @@ function renderCalendar(year, month) {
     }
 }
 
+// loop through all events and add event containers in the correct day cells
+function renderEvents(events) {
+    events.forEach(event => {
+        const eventDateString = event.datetime.toISOString().split('T')[0];
+        const dayCell = document.querySelector(`.day-cell[data-date='${eventDateString}']`);
+        if (dayCell) {
+            const eventDiv = document.createElement('div');
+            eventDiv.classList.add('event');
+            eventDiv.textContent = event.homeTeam.abbr + " vs " + event.awayTeam.abbr;
+            eventDiv.addEventListener('click', () => openEventDetail(event));
+            dayCell.querySelector('.events').appendChild(eventDiv);
+        }
+    });
+}
+
+// ----------------------------
+// Event detail modal functions
+// ----------------------------
+function openEventDetail(event) {
+    // Fill in the info
+    document.getElementById('event-date').textContent = event.datetime.toLocaleString();
+    document.getElementById('event-title').textContent = `${event.homeTeam.name} vs ${event.awayTeam.name}`;
+    document.getElementById('event-result').textContent = (event.result.homeGoals !== null && event.result.awayGoals !== null) ? `${event.result.homeGoals} : ${event.result.awayGoals}` : '- : -';
+    document.getElementById('event-competition').textContent = event.competition ? event.competition : '';
+    document.getElementById('event-sport').textContent = event.competition ? event.sport : '';
+
+    // Reveal modal
+    eventModal.classList.remove('hidden');
+}
+
+// -----------------------
+// Data handling functions
+// -----------------------
+
 // normalize event objects. Combines date and time into a single JS Date object, provides fallback values for missing data
 function normalizeEvent(rawEvent) {
     const dateStr = rawEvent.dateVenue;
@@ -130,23 +151,39 @@ async function loadEvents() {
     }
 }
 
-// loop through all events and add event containers in the correct day cells
-function renderEvents(events) {
-    events.forEach(event => {
-        const eventDateString = event.datetime.toISOString().split('T')[0];
-        const dayCell = document.querySelector(`.day-cell[data-date='${eventDateString}']`);
-        if (dayCell) {
-            const eventDiv = document.createElement('div');
-            eventDiv.classList.add('event');
-            eventDiv.textContent = event.homeTeam.abbr + " vs " + event.awayTeam.abbr;
-            dayCell.querySelector('.events').appendChild(eventDiv);
-        }
-    });
-}
+// ---------------
+// Event listeners
+// ---------------
+prevBtn.addEventListener('click', () => {
+    currentMonth--;
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+    }
+    renderCalendar(currentYear, currentMonth);
+    renderEvents(normalEvents);
+});
 
-// Initialize the app
-// 1. load and normalize events from events.json
-// 2. render calendar header, grid and events
+nextBtn.addEventListener('click', () => {
+    currentMonth++;
+    if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+    }
+    renderCalendar(currentYear, currentMonth);
+    renderEvents(normalEvents);
+});
+
+closeEventModalBtn.addEventListener('click', () => {eventModal.classList.add('hidden')});
+eventModal.addEventListener('click',(e) => {
+    if (e.target === eventModal) {
+        eventModal.classList.add('hidden');
+    }
+});
+
+// --------------
+// Initialization
+// --------------
 async function init() {
     normalEvents = await loadEvents();
 

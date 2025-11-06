@@ -8,17 +8,29 @@
         <title>Event Calendar</title>
     </head>
     <body>
-        <nav id="calendar-navigation">
-            <button id="prevButton">&larr;</button>
-            <div id="month-title"></div>
-            <button id="nextButton">&rarr;</button>
-        </nav>
-        <main>
-            <div id="calendar">
-                <div class="calendar-header"></div>
-                <div class="calendar-grid"></div>
+        <div id="calendar-view">
+            <nav id="calendar-navigation">
+                <button id="prevButton">&larr;</button>
+                <div id="month-title"></div>
+                <button id="nextButton">&rarr;</button>
+            </nav>
+            <main>
+                <div id="calendar">
+                    <div class="calendar-header"></div>
+                    <div class="calendar-grid"></div>
+                </div>
+            </main>
+        </div>
+        <div id="event-detail-view" class="modal hidden">
+            <div id="event-modal" class="modal-content">
+                <button id="close-event-modal" class="close-btn">X</button>
+                <p id="event-date"></p>
+                <h2 id="event-title"></h2>
+                <p id="event-result"></p>
+                <p id="event-competition"></p>
+                <p id="event-sport"></p>
             </div>
-        </main>
+        </div>
         <script src="script.js"></script>
     </body>
 </html>
