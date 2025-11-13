@@ -104,6 +104,13 @@ body {
     background-color: var(--system-event-hover);
 }
 
+.event.user {
+    background-color: var(--user-event-background);
+}
+.event.user:hover {
+    background-color: var(--user-event-hover);
+}
+
 .day-today {
     background-color: var(--day-today-color);
 }
@@ -150,13 +157,8 @@ body {
 /*
 - fade-in & -out for modals
 - light and dark mode
-- nicer buttons
 - alternative cursor for empty event divs
-- properly structured modals
-- pointer on button hover
-- favicon?
 - day borders are double in the center (detail)
-- maybe add today button
 */
 
 /* Determines the background for the modal view */
@@ -233,7 +235,6 @@ h2 {
     height: 200%;
 }
 
-#event-create-form label input,
 #event-create-form label select {
     grid-column: 2;
     border: 1px solid #ccc;
