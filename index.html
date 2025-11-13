@@ -11,11 +11,11 @@
     <body>
         <div id="calendar-view">
             <nav id="calendar-navigation">
-                <button class="nav-button" id="todayButton">&odot; </button>
-                <button class="nav-button" id="prevButton">&larr;</button>
+                <button class="nav-button" id="todayButton" title="Back to current month">&odot; </button>
+                <button class="nav-button" id="prevButton" title="Previous month">&larr;</button>
                 <div id="month-title"></div>
-                <button class="nav-button" id="nextButton">&rarr;</button>
-                <button class="nav-button" id="createButton">&oplus; </button>
+                <button class="nav-button" id="nextButton" title="Next month">&rarr;</button>
+                <button class="nav-button" id="createButton" title="Add event">&oplus; </button>
             </nav>
             <main>
                 <div id="calendar">
@@ -26,7 +26,7 @@
         </div>
         <div id="event-detail-view" class="modal hidden">
             <div id="event-modal" class="modal-content">
-                <button class="modal-close">&#x2715;</button>
+                <button class="modal-close" title="Close">&#x2715;</button>
                 <p id="event-date"></p>
                 <h2 id="event-title"></h2>
                 <p id="event-result"></p>
@@ -36,7 +36,7 @@
         </div>
         <div id="event-create-view" class="modal hidden">
             <div id="create-modal" class="modal-content">
-                <button class="modal-close">&#x2715;</button>
+                <button class="modal-close" title="Close">&#x2715;</button>
                 <h2 id="create-modal-title">New event</h2>
                 <form id="event-create-form">
                     <label>Match<input type="checkbox" id="event-input-match"></label> 

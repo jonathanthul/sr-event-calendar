@@ -73,6 +73,7 @@ function renderCalendar(year, month) {
 
         const dayDiv = document.createElement('div');
         dayDiv.classList.add('day-cell');
+        dayDiv.setAttribute('title', 'Add event');
 
         dayDiv.textContent = clickDate.getUTCDate();
         // toISOString will return the wrong date: Say you're on November 1st. Then new Date (November 1 2025) will return the timestamp for midnight of November 1st 2025 in the local timezone, i. e. NOT UTC but GMT+0100 in your case. Then .toISOString() converts the date into UTC which (since you're operating with midnight) becomes "2025-10-31T23:00:00.000Z", i. e. October 31st 2025 23:00.
@@ -108,9 +109,11 @@ function renderEvents(events) {
         if (dayCell) {
             const eventDiv = document.createElement('div');
             eventDiv.classList.add('event');
+            eventDiv.setAttribute('title', 'See event details');
+            if (event.source == 'user') {eventDiv.classList.add('user')};
             eventDiv.textContent = event.name
                 ? event.name
-                : event.homeTeam.name || 'TBA' + " vs " + event.awayTeam.name || 'TBA';
+                : (event.homeTeam.name || 'TBA') + " vs " + (event.awayTeam.name || 'TBA');
             eventDiv.addEventListener('click', () => openEventDetail(event));
             dayCell.querySelector('.events').appendChild(eventDiv);
         }
