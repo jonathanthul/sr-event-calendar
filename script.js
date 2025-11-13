@@ -11,6 +11,7 @@ let currentMonth = currentDate.getMonth();
 const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
+const todayBtn = document.getElementById('todayButton');
 const prevBtn = document.getElementById('prevButton');
 const nextBtn = document.getElementById('nextButton');
 const createBtn = document.getElementById('createButton');
@@ -242,6 +243,12 @@ async function loadEvents() {
 // ---------------
 // Event listeners
 // ---------------
+todayBtn.addEventListener('click', () => {
+    currentMonth = currentDate.getMonth();
+    currentYear = currentDate.getFullYear();
+    refreshCalendar();
+});
+
 prevBtn.addEventListener('click', () => {
     currentMonth--;
     if (currentMonth < 0) {
