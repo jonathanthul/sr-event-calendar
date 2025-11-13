@@ -24,6 +24,7 @@ const createModal = document.getElementById('event-create-view');
 const closeModalBtns = document.querySelectorAll('.modal-close');
 const eventSaveBtn = document.getElementById('event-input-save');
 
+const sportInput = document.getElementById('event-select-sport');
 const nameInput = document.getElementById('event-input-name');
 const nameLabel = document.getElementById('event-input-name-label');
 const matchInput = document.getElementById('event-input-match');
@@ -32,7 +33,6 @@ const hometeamLabel = document.getElementById('event-input-hometeam-label');
 const awayteamInput = document.getElementById('event-input-awayteam');
 const awayteamLabel = document.getElementById('event-input-awayteam-label');
 const datetimeInput = document.getElementById('event-input-datetime');
-const sportInput = document.getElementById('event-input-sport');
 const competitionInput = document.getElementById('event-input-competition');
 
 // ----------------------------
@@ -157,14 +157,13 @@ function openEventDetail(event) {
     };
 
     // Fill in the info
-    // This is not set up to work with user events, especially non-match ones
     document.getElementById('event-date').textContent = event.datetime.toLocaleString("en-GB", datetimeOptions);
     document.getElementById('event-title').textContent = event.name
         ? event.name
-        : event.homeTeam.name || 'TBA' + " vs " + event.awayTeam.name || 'TBA';
+        : (event.homeTeam.name || 'TBA') + " vs " + (event.awayTeam.name || 'TBA');
     if (event.result) {document.getElementById('event-result').textContent = (event.result.homeGoals !== null && event.result.awayGoals !== null) ? `${event.result.homeGoals} : ${event.result.awayGoals}` : '- : -'};
     document.getElementById('event-competition').textContent = event.competition ? event.competition : '';
-    document.getElementById('event-sport').textContent = event.competition ? event.sport : '';
+    document.getElementById('event-sport').textContent = event.sport ? event.sport : '';
 
     // Reveal modal
     eventModal.classList.remove('hidden');
@@ -290,6 +289,22 @@ document.querySelectorAll('.modal').forEach(modal => {
         }
     });
 });
+
+function updateEventInputs() {
+    const sport = sportInput.value;
+
+    teamsports = ['American Football', 'Baseball', 'Basketball', 'Cricket', 'Football', 'Ice hockey', 'Volleyball'];
+    matchsports = ['Boxing', 'Tennis'];
+
+    if (
+        teamsports.includes(sport)
+    ) 
+    {
+        console.log(`${sport} selected!`);
+    };
+};
+
+sportInput.addEventListener('click', () => updateEventInputs());
 
 createBtn.addEventListener('click', () => {openEventCreate();});
 
