@@ -46,6 +46,7 @@ body {
 .nav-button:hover {
     background-color: #fff3c4;
     border-radius: 10px;
+    transition: background-color 0.2s ease;
 }
 
 #month-title {
@@ -102,6 +103,7 @@ body {
 }
 .event:hover {
     background-color: var(--system-event-hover);
+    transition: background-color 0.2s ease;
 }
 
 .event.user {
@@ -109,6 +111,7 @@ body {
 }
 .event.user:hover {
     background-color: var(--user-event-hover);
+    transition: background-color 0.2s ease;
 }
 
 .day-today {
@@ -180,6 +183,7 @@ body {
 
 /* Modal box */
 .modal-content {
+    border-radius: var(--border-radius);
     background: white;
     padding: 20px;
     width: 90%;
@@ -200,6 +204,7 @@ body {
 .modal-close:hover {
     background-color: #fff3c4;
     border-radius: 10px;
+    transition: background-color 0.2s ease;
 }
 
 h2 {
@@ -256,6 +261,7 @@ h2 {
 
 #event-input-save:hover {
     background-color: var(--system-event-hover);
+    transition: background-color 0.2s ease;
 }
 
 @media (max-width: 768px) {
